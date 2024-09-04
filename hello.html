@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Appointment Booking</title>
+</head>
+<body>
+
+<h1>Doctor Appointment Booking</h1>
+
+<form id="appointmentForm" method="post" action="/book-appointment">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required><br><br>
+
+  <label for="phone">Phone:</label>
+  <input type="tel" id="phone" name="phone" required><br><br>
+
+  <label for="department">Department:</label>
+  <select id="department" name="department" onchange="populateDoctors()" required>
+    <option value="">Select Department</option>
+    <option value="Cardiology">Cardiology</option>
+    <option value="Dermatology">Dermatology</option>
+    <!-- Add more department options as needed -->
+  </select><br><br>
+
+  <label for="doctor">Doctor:</label>
+  <select id="doctor" name="doctor" required>
+    <option value="">Select Doctor</option>
+  </select><br><br>
+
+  <label for="appointmentDate">Select Date:</label>
+  <input type="date" id="appointmentDate" name="appointmentDate" onchange="populateTimeSlots()" required><br><br>
+
+  <label for="appointmentTime">Select Time:</label>
+  <select id="appointmentTime" name="appointmentTime" required>
+    <option value="">Select Time Slot</option>
+  </select><br><br>
+
+  <input type="submit" value="Book Appointment">
+</form>
+
+<script>
+function populateDoctors() {
+  var department = document.getElementById("department").value;
+  var doctorSelect = document.getElementById("doctor");
+  doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+
+  // In a real application, you would query a database or an API to get doctors based on the selected department
+  // For demonstration purposes, let's assume some hardcoded doctor options
+  if (department === "Cardiology") {
+    var doctors = ["Dr. Smith", "Dr. Johnson", "Dr. Williams"];
+  } else if (department === "Dermatology") {
+    var doctors = ["Dr. Brown", "Dr. Davis", "Dr. Miller"];
+  } else {
+    var doctors = [];
+  }
+
+  doctors.forEach(function(doctor) {
+    var option = document.createElement("option");
+    option.text = doctor;
+    option.value = doctor;
+    doctorSelect.add(option);
+  });
+}
+
+function populateTimeSlots() {
+  var appointmentDate = new Date(document.getElementById("appointmentDate").value);
+  var today = new Date();
+  var appointmentTimeSelect = document.getElementById("appointmentTime");
+  appointmentTimeSelect.innerHTML = '<option value="">Select Time Slot</option>';
+
+  if (appointmentDate < today) {
+    alert("Please select a date from today onwards.");
+    return;
+  }
+
+  // Get the selected date
+  var selectedDate = document.getElementById("appointmentDate").value;
+
+  // Make an AJAX request to fetch booked time slots for the selected date
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/get-booked-time-slots?date=" + selectedDate, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        var bookedTimeSlots = JSON.parse(xhr.responseText);
+
+        // In a real application, you would get booked time slots from the server and filter them accordingly
+        var availableTimeSlots = ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"];
+
+        // Filter out booked time slots
+        var filteredTimeSlots = availableTimeSlots.filter(function(slot) {
+          return !bookedTimeSlots.includes(slot);
+        });
+
+        filteredTimeSlots.forEach(function(slot) {
+          var option = document.createElement("option");
+          option.text = slot;
+          option.value = slot;
+          appointmentTimeSelect.add(option);
+        });
+      } else {
+        console.error("Failed to fetch booked time slots.");
+      }
+    }
+  };
+  xhr.send();
+}
+
+</script>
+
+</body>
+</html>

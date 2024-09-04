@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Appointment Booking</title>
+</head>
+<body>
+
+<h1>Doctor Appointment Booking</h1>
+
+<form id="appointmentForm">
+  <label for="appointmentDate">Select Date:</label>
+  <input type="date" id="appointmentDate" onchange="populateTimeSlots()" required><br><br>
+
+  <label for="appointmentTime">Select Time:</label>
+  <select id="appointmentTime" required>
+    <option value="">Select Time Slot</option>
+  </select><br><br>
+
+  <button type="submit">Book Appointment</button>
+</form>
+
+<script>
+function populateTimeSlots() {
+  var appointmentDate = new Date(document.getElementById("appointmentDate").value);
+  var today = new Date();
+  var appointmentTimeSelect = document.getElementById("appointmentTime");
+  appointmentTimeSelect.innerHTML = '<option value="">Select Time Slot</option>';
+
+  if (appointmentDate < today) {
+    alert("Please select a date from today onwards.");
+    return;
+  }
+
+  var availableTimeSlots = getAvailableTimeSlots(appointmentDate);
+  availableTimeSlots.forEach(function(slot) {
+    var option = document.createElement("option");
+    option.text = slot;
+    option.value = slot;
+    appointmentTimeSelect.add(option);
+  });
+}
+
+function getAvailableTimeSlots(appointmentDate) {
+  // In a real application, you would query a database or an API to get available time slots
+  // For demonstration purposes, let's assume some hardcoded available time slots
+  var availableTimeSlots = ["09:00 AM", "10:00 AM", "11:00 AM", "02:00 PM", "03:00 PM", "04:00 PM"];
+
+  // In a real scenario, you would check the booked appointments for the selected date
+  // and remove those time slots from the availableTimeSlots array
+  var bookedAppointments = JSON.parse(localStorage.getItem("bookedAppointments")) || {};
+  var bookedSlots = bookedAppointments[appointmentDate.toISOString().split("T")[0]] || [];
+
+  availableTimeSlots = availableTimeSlots.filter(slot => !bookedSlots.includes(slot));
+
+  return availableTimeSlots;
+}
+
+document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent form submission for demonstration purposes
+
+  var selectedDate = document.getElementById("appointmentDate").value;
+  var selectedTime = document.getElementById("appointmentTime").value;
+
+  // Save the booked appointment to local storage
+  var bookedAppointments = JSON.parse(localStorage.getItem("bookedAppointments")) || {};
+  var dateKey = new Date(selectedDate).toISOString().split("T")[0];
+  bookedAppointments[dateKey] = bookedAppointments[dateKey] || [];
+  bookedAppointments[dateKey].push(selectedTime);
+  localStorage.setItem("bookedAppointments", JSON.stringify(bookedAppointments));
+
+  // After booking, you would update the available time slots for the selected date
+  populateTimeSlots();
+
+  alert("Appointment booked for " + selectedDate + " at " + selectedTime);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointments</title>
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2em;
+            color: #007bff;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+            color: #e2e6ea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Doctor Appointments</h1>
+    <div class="container">
+        <a href="doctorportal.html" class="back-button">Back to Portal</a>
+        <h2>All Appointments</h2>
+        <table id="appointmentTable">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Appointment details will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const username = window.sessionStorage.getItem('username'); // Assuming 'username' is stored in sessionStorage
+            $.get("/displayappointments?username=" + username, function(appointments) {
+                const appointmentTable = $('#appointmentTable tbody');
+                appointments.forEach(function(appointment) {
+                    const row = $('<tr>');
+                    row.append($('<td>').text(appointment.name));
+                    row.append($('<td>').text(appointment.date));
+                    row.append($('<td>').text(appointment.time));
+                    row.append($('<td>').text(appointment.phone));
+                    appointmentTable.append(row);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

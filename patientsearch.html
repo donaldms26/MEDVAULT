@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details and Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        /* Additional styles for patient details and reports */
+        #patientDetails, #patientReports {
+            margin-top: 20px;
+        }
+
+        .report {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Details and Reports</h1>
+        <label for="patientId">Enter Patient ID:</label>
+        <input type="text" id="patientId" name="patientId">
+        <button onclick="getPatientData()">Search</button>
+
+        <div id="patientDetails"></div>
+        <div id="patientReports"></div>
+
+        <!-- Prescription input -->
+        <div id="prescription" style="display: none;">
+            <label for="prescriptionText">Prescription:</label>
+            <textarea id="prescriptionText" name="prescription"></textarea>
+            <button id="addPrescription" onclick="addPrescription()">Add Prescription</button>
+        </div>
+
+        <!-- Test input -->
+        <div id="test" style="display: none;">
+            <label for="testText">Test:</label>
+            <textarea id="testText" name="test"></textarea>
+            <button id="addTest" onclick="addTest()">Add Test</button>
+        </div>
+    </div>
+
+    <script>
+        async function getPatientData() {
+            const patientId = document.getElementById('patientId').value;
+            const response = await fetch(`/patient/${patientId}`);
+            const data = await response.json();
+            displayPatientData(data);
+        }
+
+        function displayPatientData(data) {
+            const patientDetailsElement = document.getElementById('patientDetails');
+            const patientReportsElement = document.getElementById('patientReports');
+            const prescriptionDiv = document.getElementById('prescription');
+            const testDiv = document.getElementById('test');
+
+            // Clear previous data
+            patientDetailsElement.innerHTML = '';
+            patientReportsElement.innerHTML = '';
+
+            if (data.error) {
+                patientDetailsElement.textContent = data.error;
+                // Hide prescription and test fields if user not found
+                prescriptionDiv.style.display = 'none';
+                testDiv.style.display = 'none';
+            } else {
+                // Display patient details
+                const detailsHTML = `<h2>Patient Details</h2>
+                                    <p>Name: ${data.name}</p>
+                                    <p>DOB: ${data.dob}</p>
+                                    <p>Gender: ${data.gender}</p>`;
+                patientDetailsElement.innerHTML = detailsHTML;
+
+                // Display patient reports
+                let reportsHTML = `<h2>Patient Reports</h2>`;
+                if (data.reports.length === 0) {
+                    reportsHTML += `<p>No reports found.</p>`;
+                } else {
+                    data.reports.forEach(file => {
+                        const dateWithoutTime = file.date.split('T')[0];
+                        reportsHTML += `<div class="report">
+                                            <p>Date: ${dateWithoutTime}</p>
+                                            <p>Report: ${file.recordName}</p>
+                                            <p>Source: ${file.source}</p>
+                                            <p><a href="/file/${file._id}">Download File</a></p>
+                                        </div>`;
+                    });
+                }
+                patientReportsElement.innerHTML = reportsHTML;
+
+                // Show prescription and test fields if user found
+                prescriptionDiv.style.display = 'block';
+                testDiv.style.display = 'block';
+            }
+        }
+
+        async function addPrescription() {
+            const patientId = document.getElementById('patientId').value;
+            const prescription = document.getElementById('prescriptionText').value;
+            const date = new Date().toISOString(); // Get the current date in ISO format
+            const response = await fetch(`/patient/${patientId}/prescription`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prescription, date }) // Include the date in the request body
+            });
+            if (response.ok) {
+                alert('Prescription added successfully!');
+            } else {
+                alert('Failed to add prescription');
+            }
+        }
+
+        async function addTest() {
+            const patientId = document.getElementById('patientId').value;
+            const test = document.getElementById('testText').value;
+            const date = new Date().toISOString(); // Get the current date in ISO format
+            const response = await fetch(`/patient/${patientId}/test`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ test, date }) // Include the date in the request body
+            });
+            if (response.ok) {
+                alert('Test added successfully!');
+            } else {
+                alert('Failed to add test');
+            }
+        }
+    </script>
+</body>
+</html>

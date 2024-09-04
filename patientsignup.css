@@ -1,0 +1,411 @@
+.image-2-icon5 {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    max-height: 100%;
+    width: 82px;
+    object-fit: cover;
+  }
+  .medvault5 {
+    margin: 0;
+    position: absolute;
+    top: 2px;
+    left: 62px;
+    font-size: inherit;
+    line-height: 78px;
+    display: inline-block;
+    font-style: italic;
+    font-weight: 700;
+    font-family: inherit;
+    width: 161px;
+    height: 42px;
+    white-space: nowrap;
+  }
+  .textbox-frame {
+    height: 79px;
+    width: 223px;
+    position: relative;
+  }
+  .sign-in4 {
+    text-decoration: underline;
+    color: var(--color-darkslateblue);
+    text-align:center;
+  }
+  .already-have-an-container {
+    position: relative;
+    line-height: 22px;
+    white-space: nowrap;
+  }
+  .textbox-email1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-6xs) 0 0;
+    text-align: right;
+    font-size: var(--font-size-sm);
+  }
+  .create-an-account,
+  .full-name-input {
+    font-family: var(--font-poppins);
+    color: var(--color-gray-200);
+    text-align: center;
+  }
+  .full-name-input {
+    width: 750px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--gap-xl);
+    max-width: 100%;
+    font-size: var(--font-size-5xl);
+  }
+  .create-an-account {
+    margin: 0;
+    flex: 1;
+    position: relative;
+    font-size: var(--font-size-13xl);
+    line-height: 48px;
+    font-weight: 700;
+  }
+  .create-account-message {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 0 0 14px;
+  }
+  .full-name,
+  .john-doe {
+    position: relative;
+    font-size: var(--font-size-sm);
+    line-height: 22px;
+    font-family: var(--font-noto-sans);
+    color: var(--color-darkslategray-100);
+    text-align: left;
+  }
+  .john-doe {
+    width: 150px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    height: 22px;
+    color: var(--color-silver);
+    display: inline-block;
+    padding: 0;
+  }
+  .textbox-14 {
+    align-self: stretch;
+    border-radius: var(--br-7xs);
+    background-color: var(--color-whitesmoke-100);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-9xs-5) var(--padding-xs) var(--padding-10xs-5);
+    gap: 1px 0;
+  }
+  .email,
+  .exampleemailgmailcom {
+    position: relative;
+    font-size: var(--font-size-sm);
+    line-height: 22px;
+    font-family: var(--font-noto-sans);
+    color: var(--color-darkslategray-100);
+    text-align: left;
+  }
+  .exampleemailgmailcom {
+    width: 178px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    height: 22px;
+    color: var(--color-silver);
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0;
+  }
+  .textbox-13 {
+    align-self: stretch;
+    border-radius: var(--br-7xs);
+    background-color: var(--color-whitesmoke-100);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-9xs-5) var(--padding-xs) var(--padding-10xs-5);
+    gap: 1px 0;
+  }
+  .enter-at-least,
+  .password {
+    position: relative;
+    font-size: var(--font-size-sm);
+    line-height: 22px;
+    font-family: var(--font-noto-sans);
+    color: var(--color-darkslategray-100);
+    text-align: left;
+  }
+  .enter-at-least {
+    width: 179px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    height: 22px;
+    color: var(--color-silver);
+    display: inline-block;
+    padding: 0;
+  }
+  .hide-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .error-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-10xs) 0 0;
+  }
+  .enter-at-least-8-characters-parent {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--gap-xl);
+  }
+  .agree-to-terms-checkbox,
+  .textbox-12 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .textbox-12 {
+    align-self: stretch;
+    border-radius: var(--br-7xs);
+    background-color: var(--color-whitesmoke-100);
+    padding: var(--padding-9xs-5) var(--padding-2xs) var(--padding-10xs-5)
+      var(--padding-xs);
+    gap: 1px 0;
+  }
+  .agree-to-terms-checkbox {
+    width: 383px;
+    gap: 25px 0;
+    max-width: 100%;
+  }
+  .sign-up6 {
+    position: relative;
+    font-size: var(--font-size-base);
+    line-height: 26px;
+    font-family: var(--font-noto-sans);
+    color: var(--color-white);
+    text-align: left;
+    text-align: none;
+  }
+  .button-44 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-4xs) var(--padding-xl);
+    background-color: var(--color-darkslateblue);
+    width: 384px;
+    border-radius: var(--br-7xs);
+    box-shadow: 0 0 2px rgba(26, 78, 141, 0.12),
+      0 8px 17px rgba(26, 78, 141, 0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  #submitbtn{
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-4xs) var(--padding-xl);
+    background-color: var(--color-darkslateblue);
+    width: 384px;
+    border-radius: var(--br-7xs);
+    box-shadow: 0 0 2px rgba(26, 78, 141, 0.12),
+      0 8px 17px rgba(26, 78, 141, 0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+    max-width: 100%;
+    color:white;
+  }
+
+  span{
+    color: red;
+    font-size: 15px;
+    font-style: italic;
+  }
+
+
+  .button-44:hover {
+    background-color: var(--color-steelblue);
+  }
+  .already-have-account,
+  .create-account-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+  .already-have-account {
+    margin: 0;
+    align-self: stretch;
+    gap: 32.5px 0;
+  }
+  .create-account-button {
+    width: 397px;
+    padding: var(--padding-11xl) 0 0;
+    box-sizing: border-box;
+    min-width: 397px;
+  }
+  .image-4-icon {
+    height: 519px;
+    flex: 1;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+    min-width: 400px;
+  }
+  .confirmation-frame {
+    width: 1127px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0 115px;
+  }
+  .confirmation-frame,
+  .frame-parent1,
+  .password-textbox {
+    display: flex;
+    align-items: flex-start;
+    max-width: 100%;
+  }
+  .password-textbox {
+    align-self: stretch;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .frame-parent1 {
+    width: 1303px;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 88px 0;
+  }
+  .by-signing-up {
+    margin: 0;
+  }
+  .privacy-policy,
+  .terms-of-use {
+    text-decoration: underline;
+  }
+  .terms-of-use-privacy-policy {
+    margin: 0;
+  }
+  .by-signing-up-container {
+    width: 256px;
+    position: relative;
+    line-height: 22px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .terms-of-use-link {
+    width: 736px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 100%;
+  }
+  .sign-up-with-full-name-1 {
+    width: 100%;
+    position: relative;
+    background-color: var(--color-white);
+    box-shadow: 0 3px 6px rgba(18, 15, 40, 0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-5xl) var(--padding-13xl) var(--padding-13xl);
+    box-sizing: border-box;
+    gap: 114px 0;
+    letter-spacing: normal;
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-lightslategray);
+    font-family: var(--font-noto-sans);
+  }
+  @media screen and (max-width: 1125px) {
+    .confirmation-frame {
+      gap: 0 57px;
+    }
+  }
+  @media screen and (max-width: 1025px) {
+    .create-an-account {
+      font-size: var(--font-size-7xl);
+      line-height: 38px;
+    }
+    .create-account-button {
+      flex: 1;
+    }
+    .confirmation-frame {
+      flex-wrap: wrap;
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .create-account-button,
+    .image-4-icon {
+      min-width: 100%;
+    }
+    .confirmation-frame {
+      gap: 0 29px;
+    }
+    .frame-parent1 {
+      gap: 44px 0;
+    }
+    .sign-up-with-full-name-1 {
+      gap: 57px 0;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .textbox-email1 {
+      display: none;
+    }
+    .full-name-input {
+      width: 514px;
+    }
+    .create-an-account {
+      font-size: var(--font-size-lgi);
+      line-height: 29px;
+    }
+    .already-have-account {
+      gap: 16px 0;
+    }
+    .frame-parent1 {
+      gap: 22px 0;
+    }
+    .sign-up-with-full-name-1 {
+      gap: 28px 0;
+    }
+  }
+  

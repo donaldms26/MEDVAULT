@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details and Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        /* Additional styles for patient details and reports */
+        #patientDetails, #patientReports {
+            margin-top: 20px;
+        }
+
+        .report {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .back-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='patientportal.html'">Back</button>
+        <div id="patientDetails"></div>
+        <div id="patientReports"></div>
+    </div>
+    
+
+    <script>
+        (async function getPatientData() {
+            const patientId = sessionStorage.getItem('username');
+            const response = await fetch(`/patient/${patientId}`);
+            const data = await response.json();
+            displayPatientData(data);
+        })();
+
+        function displayPatientData(data) {
+            const patientDetailsElement = document.getElementById('patientDetails');
+            const patientReportsElement = document.getElementById('patientReports');
+            const prescriptionDiv = document.getElementById('prescription');
+            const testDiv = document.getElementById('test');
+
+            // Clear previous data
+            patientDetailsElement.innerHTML = '';
+            patientReportsElement.innerHTML = '';
+
+            if (data.error) {
+                patientDetailsElement.textContent = data.error;
+                // Hide prescription and test fields if user not found
+                prescriptionDiv.style.display = 'none';
+                testDiv.style.display = 'none';
+            } else {
+                // Display patient details
+                const detailsHTML = `<h2>Patient Details</h2>
+                                    <p>Name: ${data.name}</p>
+                                    <p>DOB: ${data.dob}</p>
+                                    <p>Gender: ${data.gender}</p>`;
+                patientDetailsElement.innerHTML = detailsHTML;
+
+                // Display patient reports
+                let reportsHTML = `<h2>My Reports</h2>`;
+                if (data.reports.length === 0) {
+                    reportsHTML += `<p>No reports found.</p>`;
+                } else {
+                    data.reports.forEach(file => {
+                        const dateWithoutTime = file.date.split('T')[0];
+                        reportsHTML += `<div class="report">
+                                            <p>Date: ${dateWithoutTime}</p>
+                                            <p>Report: ${file.recordName}</p>
+                                            <p>Source: ${file.source}</p>
+                                            <p><a href="/file/${file._id}">Download File</a></p>
+                                        </div>`;
+                    });
+                }
+                patientReportsElement.innerHTML = reportsHTML;
+
+                // Show prescription and test fields if user found
+                prescriptionDiv.style.display = 'block';
+                testDiv.style.display = 'block';
+            }
+        }
+
+    </script>
+</body>
+</html>

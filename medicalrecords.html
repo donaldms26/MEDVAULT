@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+        .back-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+            color: #fff;
+        }
+
+        .back-button a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .back-button a:hover {
+            color: #e2e6ea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload a File</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="file"><br>
+            <input type="text" id="recordNameInput" name="recordName" placeholder="Enter a name for the record">
+            <input type="hidden" id="usernameInput" name="username"><br>
+            <input type="submit" value="Upload">
+        </form>
+        <button class="back-button"><a href="patientportal.html">Back</a></button>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            const fileInput = document.getElementById('fileInput');
+            const recordNameInput = document.getElementById('recordNameInput'); // Retrieve record name input element
+            const username = sessionStorage.getItem('username');
+            formData.append('file', fileInput.files[0]);
+            formData.append('source', "Uploaded by Patient" );
+            formData.append('recordName', recordNameInput.value); // Add record name to form data
+            formData.append('username', username);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    alert('File uploaded successfully!');
+                    document.getElementById('error').textContent = '';
+                } else {
+                    throw new Error('Failed to upload file');
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('error').textContent = 'Error uploading file';
+            }
+        });
+    </script>
+</body>
+</html>
